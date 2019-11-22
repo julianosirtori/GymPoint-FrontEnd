@@ -6,7 +6,7 @@ import { signRequest } from '~/store/modules/auth/actions';
 
 import { Container } from './styles';
 
-import logo from '~/assets/logo.svg';
+import logo from '~/assets/logo.png';
 
 export default function SignIn() {
   const dispatch = useDispatch();

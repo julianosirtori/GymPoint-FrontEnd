@@ -47,6 +47,7 @@ export const Aside = styled.div`
   display: flex;
   flex-direction: column;
   padding: 14px 30px;
+  align-items: flex-end;
 
   span {
     color: #666666;
