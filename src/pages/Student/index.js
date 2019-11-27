@@ -10,7 +10,7 @@ import {
   ContentTable,
   ButtonEdit,
   ButtonDelete,
-} from './styles';
+} from '~/styles/pageTable';
 
 export default function Student() {
   return (
