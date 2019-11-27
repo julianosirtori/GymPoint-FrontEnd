@@ -22,18 +22,21 @@ export default function Header() {
         <img src={logo} alt="Gympoint" />
         <ul>
           <li>
-            <StyledLink active={pathname === '/student' ? 1 : 0} to="student">
+            <StyledLink
+              active={pathname.includes('student') ? 1 : 0}
+              to="/student"
+            >
               ALUNOS
             </StyledLink>
           </li>
           <li>
-            <StyledLink active={pathname === '/plan' ? 1 : 0} to="plan">
+            <StyledLink active={pathname.includes('plan') ? 1 : 0} to="/plan">
               PLANOS
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              active={pathname === '/registration' ? 1 : 0}
+              active={pathname.includes('registration') ? 1 : 0}
               to="registration"
             >
               MATRÍCULAS
@@ -41,7 +44,7 @@ export default function Header() {
           </li>
           <li>
             <StyledLink
-              active={pathname === '/questions' ? 1 : 0}
+              active={pathname.includes('questions') ? 1 : 0}
               to="questions"
             >
               PEDIDOS DE AUXÍLIO
