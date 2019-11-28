@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
+import { toast } from 'react-toastify';
+
+import api from '~/services/api';
 
 import {
   Container,
@@ -13,6 +16,21 @@ import {
 } from '~/styles/pageTable';
 
 export default function Student() {
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    async function findStudents() {
+      try {
+        const response = await api.get('/students');
+        const { data } = response;
+        setStudents(data);
+      } catch (err) {
+        toast.error('Ocorreu um erro');
+      }
+    }
+    findStudents();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -39,42 +57,17 @@ export default function Student() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Juliano Sirtori</td>
-              <td>julianosirtori@gmail.com</td>
-              <td>20</td>
-              <td>
-                <ButtonEdit type="button">editar</ButtonEdit>
-                <ButtonDelete type="button">apagar</ButtonDelete>
-              </td>
-            </tr>
-            <tr>
-              <td>Juliano Sirtori</td>
-              <td>julianosirtori@gmail.com</td>
-              <td>20</td>
-              <td>
-                <ButtonEdit type="button">editar</ButtonEdit>
-                <ButtonDelete type="button">apagar</ButtonDelete>
-              </td>
-            </tr>
-            <tr>
-              <td>Juliano Sirtori</td>
-              <td>julianosirtori@gmail.com</td>
-              <td>20</td>
-              <td>
-                <ButtonEdit type="button">editar</ButtonEdit>
-                <ButtonDelete type="button">apagar</ButtonDelete>
-              </td>
-            </tr>
-            <tr>
-              <td>Juliano Sirtori</td>
-              <td>julianosirtori@gmail.com</td>
-              <td>20</td>
-              <td>
-                <ButtonEdit type="button">editar</ButtonEdit>
-                <ButtonDelete type="button">apagar</ButtonDelete>
-              </td>
-            </tr>
+            {students.map(student => (
+              <tr key={student.id}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.age}</td>
+                <td>
+                  <ButtonEdit type="button">editar</ButtonEdit>
+                  <ButtonDelete type="button">apagar</ButtonDelete>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </ContentTable>
