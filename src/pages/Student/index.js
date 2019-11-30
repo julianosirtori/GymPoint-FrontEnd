@@ -60,25 +60,16 @@ export default function Student() {
     setModalIsOpen(false);
   }
 
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
-
   return (
     <Container>
       <Modal
         isOpen={modalIsOpen}
-        style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Request Delete User"
+        ariaHideApp={false}
+        className="Modal"
+        overlayClassName="OverlayModal"
       >
-        <h1>Tem certeza que desja apagar o Aluno ?</h1>
+        <h1>Tem certeza que deseja apagar o Aluno ?</h1>
         <div>
           <button type="button" onClick={handleButtonOkModal}>
             SIM

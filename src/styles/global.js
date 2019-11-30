@@ -11,6 +11,54 @@ export default createGlobalStyle`
   box-sizing: border-box;
 }
 
+.OverlayModal{
+  position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.Modal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px #00000033;
+    border-radius: 4px;
+    padding: 30px;
+    top: 50%;
+    color: #444444;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+    div{
+      margin-top: 16px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      button {
+        margin-left: 8px;
+        padding: 13px 16px;
+        color: white;
+        font-size: 16px;
+        border:none;
+        background: #4d85ee;
+
+        & + button{
+          background: #de3b3b;
+        }
+      }
+
+
+    }
+}
+
 *:focus{
   outline: 0;
 }
