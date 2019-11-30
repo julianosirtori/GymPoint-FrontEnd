@@ -4,6 +4,7 @@ import { MdAdd, MdSearch } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 import {
   Container,
@@ -30,6 +31,10 @@ export default function Student() {
     }
     findStudents();
   }, []);
+
+  function handleButtonEdit(idStudent) {
+    history.push('/student/update', { idStudent });
+  }
 
   return (
     <Container>
@@ -63,7 +68,14 @@ export default function Student() {
                 <td>{student.email}</td>
                 <td>{student.age}</td>
                 <td>
-                  <ButtonEdit type="button">editar</ButtonEdit>
+                  <ButtonEdit
+                    onClick={() => {
+                      handleButtonEdit(student.id);
+                    }}
+                    type="button"
+                  >
+                    editar
+                  </ButtonEdit>
                   <ButtonDelete type="button">apagar</ButtonDelete>
                 </td>
               </tr>
