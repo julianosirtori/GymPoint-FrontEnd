@@ -21,10 +21,11 @@ export default function Student() {
   const [students, setStudents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [idStudentCurrent, setIdStudentCurrent] = useState(0);
+  const [search, setSearch] = useState('');
 
   async function findStudents() {
     try {
-      const response = await api.get('/students');
+      const response = await api.get('/students', { params: { search } });
       const { data } = response;
       setStudents(data);
     } catch (err) {
@@ -34,7 +35,13 @@ export default function Student() {
 
   useEffect(() => {
     findStudents();
-  }, []);
+    // eslint-disable-next-line
+  }, [search]);
+
+  function handleInputSearch(event) {
+    const { value } = event.target;
+    setSearch(value);
+  }
 
   function handleButtonEdit(idStudent) {
     history.push('/student/update', { idStudent });
@@ -89,7 +96,12 @@ export default function Student() {
           </Link>
           <Search>
             <MdSearch size={20} color="#999999" />
-            <input name="query" placeholder="Buscar Aluno" />
+            <input
+              name="query"
+              value={search}
+              onChange={handleInputSearch}
+              placeholder="Buscar Aluno"
+            />
           </Search>
         </ActionHeader>
       </Header>
