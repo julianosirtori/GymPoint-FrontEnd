@@ -25,13 +25,18 @@ export const ContainerForm = styled.div`
     margin-bottom: 7px;
   }
 
-  input {
+  input,
+  select {
     color: #999999;
     font-size: 16px;
     padding: 13px 15px;
     border: 1px solid #dddddd;
     border-radius: 4px;
     margin-bottom: 20px;
+  }
+
+  select {
+    background: #ffffff;
   }
 `;
 

@@ -14,6 +14,9 @@ import NewPlan from '~/pages/Plan/New';
 import UpdatePlan from '~/pages/Plan/Update';
 
 import Registration from '~/pages/Registration';
+import NewRegistration from '~/pages/Registration/New';
+import UpdateRegistration from '~/pages/Registration/Update';
+
 import Questions from '~/pages/Questions';
 
 export default function Routes() {
@@ -30,6 +33,19 @@ export default function Routes() {
       <Route path="/plan/update" exact component={UpdatePlan} isPrivate />
 
       <Route path="/registration" exact component={Registration} isPrivate />
+      <Route
+        path="/registration/new"
+        exact
+        component={NewRegistration}
+        isPrivate
+      />
+      <Route
+        path="/registration/update"
+        exact
+        component={UpdateRegistration}
+        isPrivate
+      />
+
       <Route path="/questions" exact component={Questions} isPrivate />
     </Switch>
   );
