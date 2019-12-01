@@ -4,6 +4,8 @@ import { MdAdd } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
 
+import { formatPrice, formatMonthDuration } from '~/util/format';
+
 import api from '~/services/api';
 import history from '~/services/history';
 
@@ -24,7 +26,12 @@ export default function Plan() {
   async function findPlans() {
     try {
       const response = await api.get('/plans');
-      const { data } = response;
+      const data = response.data.map(plan => ({
+        ...plan,
+        priceFormatted: formatPrice(plan.price),
+        durationFormatted: formatMonthDuration(plan.duration),
+      }));
+
       setPlans(data);
     } catch (err) {
       toast.error('Ocorreu um erro');
@@ -102,8 +109,8 @@ export default function Plan() {
             {plans.map(plan => (
               <tr key={plan.id}>
                 <td>{plan.title}</td>
-                <td>{plan.duration}</td>
-                <td>{plan.price}</td>
+                <td>{plan.durationFormatted}</td>
+                <td>{plan.priceFormatted}</td>
                 <td>
                   <ButtonEdit
                     onClick={() => {

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import producer from 'immer';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import { Input, Form } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
@@ -16,6 +17,29 @@ import {
 } from '~/styles/pageForm';
 
 export default function NewPlan() {
+  const [plan, setPlan] = useState({
+    title: '',
+    duration: 0,
+    price: 0,
+    priceTotal: 0,
+  });
+
+  useEffect(() => {
+    setPlan(
+      producer(plan, draft => {
+        draft.priceTotal = plan.duration * plan.price;
+      })
+    );
+  }, [plan]);
+
+  function handleInput(event) {
+    const { value, name } = event.target;
+    setPlan({
+      ...plan,
+      [name]: value,
+    });
+  }
+
   async function handleSubmit(data) {
     try {
       await api.post('/plans', data);
@@ -44,13 +68,22 @@ export default function NewPlan() {
         </Header>
 
         <ContainerForm>
-          <Input label="TÍTULO DO PLANO" type="text" name="title" required />
+          <Input
+            label="TÍTULO DO PLANO"
+            value={plan.title}
+            type="text"
+            onChange={handleInput}
+            name="title"
+            required
+          />
           <FormHorizontal>
             <div>
               <Input
                 label="DURAÇÃO (em meses)"
                 type="number"
                 name="duration"
+                onChange={handleInput}
+                value={plan.duration}
                 required
               />
             </div>
@@ -59,6 +92,8 @@ export default function NewPlan() {
                 label="PREÇO MENSAL"
                 type="number"
                 step="any"
+                onChange={handleInput}
+                value={plan.price}
                 name="price"
                 required
               />
@@ -68,6 +103,8 @@ export default function NewPlan() {
                 label="PREÇO TOTAL"
                 type="number"
                 step="any"
+                onChange={handleInput}
+                value={plan.priceTotal}
                 disabled
                 name="priceTotal"
                 required

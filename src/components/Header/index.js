@@ -37,7 +37,7 @@ export default function Header() {
           <li>
             <StyledLink
               active={pathname.includes('registration') ? 1 : 0}
-              to="registration"
+              to="/registration"
             >
               MATRÍCULAS
             </StyledLink>
@@ -45,7 +45,7 @@ export default function Header() {
           <li>
             <StyledLink
               active={pathname.includes('questions') ? 1 : 0}
-              to="questions"
+              to="/questions"
             >
               PEDIDOS DE AUXÍLIO
             </StyledLink>
