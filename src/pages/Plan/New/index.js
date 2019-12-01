@@ -15,14 +15,14 @@ import {
   ContainerForm,
 } from '~/styles/pageForm';
 
-export default function NewStudent() {
+export default function NewPlan() {
   async function handleSubmit(data) {
     try {
-      await api.post('/students', data);
-      toast.success('Aluno salvo com sucesso');
-      history.push('/student');
+      await api.post('/plans', data);
+      toast.success('Plano salvo com sucesso');
+      history.push('/plan');
     } catch (err) {
-      toast.error('Falha ao salvar aluno');
+      toast.error('Falha ao salvar plano');
     }
   }
 
@@ -30,9 +30,9 @@ export default function NewStudent() {
     <Container>
       <Form onSubmit={handleSubmit}>
         <Header>
-          <h1>Cadastro de aluno</h1>
+          <h1>Cadastro de plano</h1>
           <ActionHeader>
-            <Link to="/student">
+            <Link to="/plan">
               <MdChevronLeft size={20} color="#FFFFFF" />
               VOLTAR
             </Link>
@@ -44,27 +44,32 @@ export default function NewStudent() {
         </Header>
 
         <ContainerForm>
-          <Input label="NOME COMPLETO" type="text" name="name" required />
-          <Input label="ENDEREÇO DE EMAIL" type="email" name="email" required />
+          <Input label="TÍTULO DO PLANO" type="text" name="title" required />
           <FormHorizontal>
             <div>
-              <Input label="IDADE" type="number" name="age" required />
-            </div>
-            <div>
               <Input
-                label="PESO(em kg)"
+                label="DURAÇÃO (em meses)"
                 type="number"
-                step="any"
-                name="weight"
+                name="duration"
                 required
               />
             </div>
             <div>
               <Input
-                label="ALTURA"
+                label="PREÇO MENSAL"
                 type="number"
                 step="any"
-                name="height"
+                name="price"
+                required
+              />
+            </div>
+            <div>
+              <Input
+                label="PREÇO TOTAL"
+                type="number"
+                step="any"
+                disabled
+                name="priceTotal"
                 required
               />
             </div>
