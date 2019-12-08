@@ -25,18 +25,12 @@ export const ContainerForm = styled.div`
     margin-bottom: 7px;
   }
 
-  input,
-  select {
+  input {
     color: #999999;
     font-size: 16px;
-    padding: 13px 15px;
+    padding: 12px 15px;
     border: 1px solid #dddddd;
     border-radius: 4px;
-    margin-bottom: 20px;
-  }
-
-  select {
-    background: #ffffff;
   }
 `;
 
@@ -85,14 +79,12 @@ export const FormHorizontal = styled.div`
   display: flex;
   flex-direction: row;
   flex-grow: 1;
+`;
 
-  div {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-
-    & + div {
-      margin-left: 16px;
-    }
-  }
+export const ItemForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-right: 16px;
+  margin-bottom: 20px;
 `;

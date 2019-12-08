@@ -13,6 +13,7 @@ import {
   ActionHeader,
   FormHorizontal,
   ContainerForm,
+  ItemForm,
 } from '~/styles/pageForm';
 
 export default function NewStudent() {
@@ -44,13 +45,27 @@ export default function NewStudent() {
         </Header>
 
         <ContainerForm>
-          <Input label="NOME COMPLETO" type="text" name="name" required />
-          <Input label="ENDEREÇO DE EMAIL" type="email" name="email" required />
           <FormHorizontal>
-            <div>
+            <ItemForm>
+              <Input label="NOME COMPLETO" type="text" name="name" required />
+            </ItemForm>
+          </FormHorizontal>
+          <FormHorizontal>
+            <ItemForm>
+              <Input
+                label="ENDEREÇO DE EMAIL"
+                type="email"
+                name="email"
+                required
+              />
+            </ItemForm>
+          </FormHorizontal>
+
+          <FormHorizontal>
+            <ItemForm>
               <Input label="IDADE" type="number" name="age" required />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="PESO(em kg)"
                 type="number"
@@ -58,8 +73,8 @@ export default function NewStudent() {
                 name="weight"
                 required
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="ALTURA"
                 type="number"
@@ -67,7 +82,7 @@ export default function NewStudent() {
                 name="height"
                 required
               />
-            </div>
+            </ItemForm>
           </FormHorizontal>
         </ContainerForm>
       </Form>

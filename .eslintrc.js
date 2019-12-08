@@ -26,6 +26,7 @@ module.exports = {
   ],
    rules: {
       'prettier/prettier' : 'error',
+      'jsx-a11y/label-has-associated-control' : 'off',
       'react/jsx-filename-extension': [
           'warn',
           { extensions: ['.jsx', '.js'] }
@@ -33,7 +34,6 @@ module.exports = {
       'import/prefer-default-export': 'off',
       'react/state-in-constructor': 'off',
       'react/static-property-placement': 'off',
-      'no-param-reassign': 'off',
       'no-underscore-dangle': 'off',
       'no-console': ["error", {allow: ["tron"]}]
   },

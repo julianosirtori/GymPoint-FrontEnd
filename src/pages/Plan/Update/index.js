@@ -13,6 +13,7 @@ import {
   ActionHeader,
   FormHorizontal,
   ContainerForm,
+  ItemForm,
 } from '~/styles/pageForm';
 
 export default function UpdateUpdate({ history }) {
@@ -26,7 +27,13 @@ export default function UpdateUpdate({ history }) {
       console.tron.log(state);
       try {
         const response = await api.get(`/plans/${idPlan}`);
-        setPLan(response.data);
+
+        const responsePlan = response.data;
+
+        setPLan({
+          priceTotal: responsePlan.price * responsePlan.duration,
+          ...responsePlan,
+        });
       } catch (err) {
         toast.error('Ocorreu um erro ao buscar o plano');
       }
@@ -64,17 +71,27 @@ export default function UpdateUpdate({ history }) {
         </Header>
 
         <ContainerForm>
-          <Input label="TÍTULO DO PLANO" type="text" name="title" required />
           <FormHorizontal>
-            <div>
+            <ItemForm>
+              <Input
+                label="TÍTULO DO PLANO"
+                type="text"
+                name="title"
+                required
+              />
+            </ItemForm>
+          </FormHorizontal>
+
+          <FormHorizontal>
+            <ItemForm>
               <Input
                 label="DURAÇÃO (em meses)"
                 type="number"
                 name="duration"
                 required
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="PREÇO MENSAL"
                 type="number"
@@ -82,8 +99,8 @@ export default function UpdateUpdate({ history }) {
                 name="price"
                 required
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="PREÇO TOTAL"
                 type="number"
@@ -92,7 +109,7 @@ export default function UpdateUpdate({ history }) {
                 name="priceTotal"
                 required
               />
-            </div>
+            </ItemForm>
           </FormHorizontal>
         </ContainerForm>
       </Form>

@@ -14,6 +14,7 @@ import {
   ActionHeader,
   FormHorizontal,
   ContainerForm,
+  ItemForm,
 } from '~/styles/pageForm';
 
 export default function NewPlan() {
@@ -68,16 +69,20 @@ export default function NewPlan() {
         </Header>
 
         <ContainerForm>
-          <Input
-            label="TÍTULO DO PLANO"
-            value={plan.title}
-            type="text"
-            onChange={handleInput}
-            name="title"
-            required
-          />
           <FormHorizontal>
-            <div>
+            <ItemForm>
+              <Input
+                label="TÍTULO DO PLANO"
+                value={plan.title}
+                type="text"
+                onChange={handleInput}
+                name="title"
+                required
+              />
+            </ItemForm>
+          </FormHorizontal>
+          <FormHorizontal>
+            <ItemForm>
               <Input
                 label="DURAÇÃO (em meses)"
                 type="number"
@@ -86,8 +91,8 @@ export default function NewPlan() {
                 value={plan.duration}
                 required
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="PREÇO MENSAL"
                 type="number"
@@ -97,8 +102,8 @@ export default function NewPlan() {
                 name="price"
                 required
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="PREÇO TOTAL"
                 type="number"
@@ -109,7 +114,7 @@ export default function NewPlan() {
                 name="priceTotal"
                 required
               />
-            </div>
+            </ItemForm>
           </FormHorizontal>
         </ContainerForm>
       </Form>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
-import { Input, Select, Form } from '@rocketseat/unform';
+import { Input, Form } from '@rocketseat/unform';
+import Select from 'react-select';
 import { toast } from 'react-toastify';
 
 import history from '~/services/history';
@@ -13,7 +14,14 @@ import {
   ActionHeader,
   FormHorizontal,
   ContainerForm,
+  ItemForm,
 } from '~/styles/pageForm';
+
+const styles = {
+  input: styles => ({
+    padding: '10px 15px',
+  }),
+};
 
 export default function NewRegistration() {
   const [students, setStudents] = useState([]);
@@ -24,7 +32,7 @@ export default function NewRegistration() {
       try {
         const response = await api.get('/students');
         const data = response.data.map(student => {
-          return { id: student.id, title: student.name, ...student };
+          return { value: student.id, label: student.name, ...student };
         });
         setStudents(data);
       } catch (err) {
@@ -35,7 +43,7 @@ export default function NewRegistration() {
       try {
         const response = await api.get('/plans');
         const data = response.data.map(plan => {
-          return { id: plan.id, title: plan.title, ...plan };
+          return { value: plan.id, label: plan.title, ...plan };
         });
         setPlans(data);
       } catch (err) {
@@ -48,6 +56,10 @@ export default function NewRegistration() {
 
   function handleSubmit() {
     history.push('/registration');
+  }
+
+  function handleStartDate(event) {
+    event.target.type = 'date';
   }
 
   return (
@@ -68,46 +80,54 @@ export default function NewRegistration() {
         </Header>
 
         <ContainerForm>
-          <Select
-            name="student_id"
-            label="ALUNO"
-            placeholder="Buscar aluno"
-            options={students}
-          />
           <FormHorizontal>
-            <div>
+            <ItemForm>
+              <label htmlFor="student">ALUNO</label>
+              <Select
+                name="student_id"
+                placeholder="Buscar aluno"
+                options={students}
+                styles={styles}
+              />
+            </ItemForm>
+          </FormHorizontal>
+          <FormHorizontal>
+            <ItemForm>
+              <label htmlFor="plans">PLANO</label>
               <Select
                 name="plan_id"
-                label="PLANO"
+                id="plans"
                 placeholder="Selecione o plano"
                 options={plans}
+                styles={styles}
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="DATA DE INÍCIO"
-                type="date"
+                type="text"
+                onFocus={handleStartDate}
                 placeholder="Escolha a data"
                 name="start_date"
                 required
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="DATA DE TÉRMINO"
-                type="date"
+                type="text"
                 disabled
                 name="final_date"
               />
-            </div>
-            <div>
+            </ItemForm>
+            <ItemForm>
               <Input
                 label="VALOR FINAL"
                 type="number"
                 disabled
                 name="final_price"
               />
-            </div>
+            </ItemForm>
           </FormHorizontal>
         </ContainerForm>
       </Form>
