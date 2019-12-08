@@ -88,6 +88,14 @@ export const ContentTable = styled.div`
         }
       }
     }
+
+    .center {
+      text-align: center;
+    }
+
+    .end {
+      text-align: end;
+    }
   }
 `;
 

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MdAdd } from 'react-icons/md';
+import { MdAdd, MdCheckCircle } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
 
 import api from '~/services/api';
 import history from '~/services/history';
+
+import { formatDate } from '~/util/format';
 
 import {
   Container,
@@ -24,7 +26,11 @@ export default function Registration() {
   async function findRegistrations() {
     try {
       const response = await api.get('/registrations');
-      const { data } = response;
+      const data = response.data.map(registration => ({
+        startDateFormated: formatDate(registration.start_date),
+        endDateFormated: formatDate(registration.end_date),
+        ...registration,
+      }));
       setRegistrations(data);
     } catch (err) {
       toast.error('Ocorreu um erro');
@@ -93,23 +99,31 @@ export default function Registration() {
           <thead>
             <tr>
               <th>ALUNO</th>
-              <th>PLANO</th>
-              <th>INÍCIO</th>
-              <th>TÉRMINO</th>
-              <th>ATIVA</th>
+              <th className="center">PLANO</th>
+              <th className="center">INÍCIO</th>
+              <th className="center">TÉRMINO</th>
+              <th className="center">ATIVA</th>
               <th> </th>
             </tr>
           </thead>
           <tbody>
-            {registrations.map(student => (
-              <tr key={student.id}>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>{student.age}</td>
-                <td>
+            {registrations.map(registration => (
+              <tr key={registration.id}>
+                <td>{registration.student.name}</td>
+                <td className="center">{registration.plan.title}</td>
+                <td className="center">{registration.startDateFormated}</td>
+                <td className="center">{registration.endDateFormated}</td>
+                <td className="center">
+                  {registration.active ? (
+                    <MdCheckCircle color="#42CB59" size={20} />
+                  ) : (
+                    <MdCheckCircle color="#DDDDDD" size={20} />
+                  )}
+                </td>
+                <td className="end">
                   <ButtonEdit
                     onClick={() => {
-                      handleButtonEdit(student.id);
+                      handleButtonEdit(registration.id);
                     }}
                     type="button"
                   >
@@ -117,7 +131,7 @@ export default function Registration() {
                   </ButtonEdit>
                   <ButtonDelete
                     onClick={() => {
-                      handleButtonDelete(student.id);
+                      handleButtonDelete(registration.id);
                     }}
                     type="button"
                   >

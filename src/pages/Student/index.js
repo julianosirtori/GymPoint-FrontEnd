@@ -111,7 +111,7 @@ export default function Student() {
             <tr>
               <th>NOME</th>
               <th>E-EMAIL</th>
-              <th>IDADE</th>
+              <th className="center">IDADE</th>
               <th> </th>
             </tr>
           </thead>
@@ -120,8 +120,8 @@ export default function Student() {
               <tr key={student.id}>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
-                <td>{student.age}</td>
-                <td>
+                <td className="center">{student.age}</td>
+                <td className="end">
                   <ButtonEdit
                     onClick={() => {
                       handleButtonEdit(student.id);

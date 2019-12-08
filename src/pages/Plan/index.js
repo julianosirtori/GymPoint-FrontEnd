@@ -100,8 +100,8 @@ export default function Plan() {
           <thead>
             <tr>
               <th>TÍTULO</th>
-              <th>DURAÇÃO</th>
-              <th>VALOR p/MÊS</th>
+              <th className="center">DURAÇÃO</th>
+              <th className="center">VALOR p/MÊS</th>
               <th> </th>
             </tr>
           </thead>
@@ -109,9 +109,9 @@ export default function Plan() {
             {plans.map(plan => (
               <tr key={plan.id}>
                 <td>{plan.title}</td>
-                <td>{plan.durationFormatted}</td>
-                <td>{plan.priceFormatted}</td>
-                <td>
+                <td className="center">{plan.durationFormatted}</td>
+                <td className="center">{plan.priceFormatted}</td>
+                <td className="end">
                   <ButtonEdit
                     onClick={() => {
                       handleButtonEdit(plan.id);
