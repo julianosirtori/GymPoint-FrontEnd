@@ -22,13 +22,13 @@ export default function NewPlan() {
     title: '',
     duration: 0,
     price: 0,
-    priceTotal: 0,
+    priceTotal: '',
   });
 
   useEffect(() => {
     setPlan(
       producer(plan, draft => {
-        draft.priceTotal = plan.duration * plan.price;
+        draft.priceTotal = `R$ ${plan.duration * plan.price}`;
       })
     );
   }, [plan]);
@@ -106,8 +106,7 @@ export default function NewPlan() {
             <ItemForm>
               <Input
                 label="PREÇO TOTAL"
-                type="number"
-                step="any"
+                type="text"
                 onChange={handleInput}
                 value={plan.priceTotal}
                 disabled

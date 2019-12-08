@@ -26,6 +26,7 @@ export const ContainerForm = styled.div`
   }
 
   input {
+    width: 100%;
     color: #999999;
     font-size: 16px;
     padding: 12px 15px;
