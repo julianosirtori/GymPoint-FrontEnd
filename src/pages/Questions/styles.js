@@ -29,5 +29,8 @@ export const Content = styled.div`
         }
       }
     }
+    .end {
+      text-align: end;
+    }
   }
 `;

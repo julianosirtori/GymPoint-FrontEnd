@@ -22,6 +22,8 @@ export default createGlobalStyle`
 
 .Modal {
     display: flex;
+    max-width: 450px;
+    width: 100%;
     flex-direction: column;
     position: absolute;
     background: #FFFFFF;
@@ -36,7 +38,53 @@ export default createGlobalStyle`
     margin-right: -50%;
     transform: translate(-50%, -50%);
 
-    div{
+    strong{
+      color: #444444;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    p{
+      color: #666666;
+      font-size: 16px;
+      text-align: left;
+      min-height: 100px;
+      margin-bottom: 22px;
+      line-height: 26px;
+    }
+
+    form{
+      margin-top: 5px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      textarea{
+        width: 100%;
+        border: 1px solid #DDDDDD;
+        border-radius: 4px;
+        padding: 13px 15px;
+        font-size: 16px;
+        color: #999999;
+        min-height: 127px;
+        margin-bottom: 21px;
+      }
+
+      button{
+        width: 100%;
+        height: 45px;
+        background: #EE4D64;
+        color: white;
+        border: none;
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 4px;
+      }
+    }
+
+    .alert-actions{
       margin-top: 16px;
       width: 100%;
       display: flex;
@@ -54,8 +102,6 @@ export default createGlobalStyle`
           background: #de3b3b;
         }
       }
-
-
     }
 }
 
