@@ -24,7 +24,6 @@ export default function UpdateStudent({ history }) {
     async function findUser() {
       const { state } = history.location;
       const { idStudent } = state;
-      console.tron.log(state);
       try {
         const response = await api.get(`/students/${idStudent}`);
         console.tron.log(response);

@@ -22,13 +22,14 @@ import {
 } from '~/styles/pageForm';
 
 const styles = {
-  input: styles => ({
+  input: () => ({
     padding: '10px 15px',
   }),
 };
 
 export default function NewRegistration() {
   const [planSelected, setPlanSelected] = useState({ duration: 0 });
+  const [studentSelected, setStudentSelected] = useState({});
   const [endDate, setEndDate] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endPrice, setEndPrice] = useState('');
@@ -64,21 +65,18 @@ export default function NewRegistration() {
     return [];
   }
 
-  async function handleSubmit(value) {
+  async function handleSubmit() {
     try {
-      console.log(value);
-      // history.push('/registration');
+      await api.post('/registrations', {
+        plan_id: planSelected.id,
+        start_date: startDate,
+        student_id: studentSelected.id,
+      });
+      toast.success('Matrícula Cadastrada com sucesso');
+      history.push('/registration');
     } catch (err) {
       toast.error('Ocorreu um erro');
     }
-  }
-
-  function handlePlans(plan) {
-    setPlanSelected(plan);
-  }
-
-  function handleStartDate(value) {
-    setStartDate(value);
   }
 
   return (
@@ -106,6 +104,9 @@ export default function NewRegistration() {
                 cacheOptions
                 defaultOptions
                 name="student_id"
+                onChange={value => {
+                  setStudentSelected(value);
+                }}
                 placeholder="Buscar aluno"
                 loadOptions={loadStudents}
                 styles={styles}
@@ -121,14 +122,19 @@ export default function NewRegistration() {
                 name="plan_id"
                 placeholder="Selecione o plano"
                 loadOptions={loadPlans}
-                onChange={handlePlans}
+                onChange={value => {
+                  setPlanSelected(value);
+                }}
                 styles={styles}
               />
             </ItemForm>
             <ItemForm>
               <label>DATA DE INÍCIO</label>
               <DatePicker
-                onChange={handleStartDate}
+                onChange={value => {
+                  setStartDate(value);
+                }}
+                dateFormat="dd/MM/yyyy"
                 selected={startDate}
                 name="start_date"
                 placeholderText="Escolha a data"
