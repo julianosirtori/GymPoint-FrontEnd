@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import Modal from 'react-modal';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -20,24 +19,21 @@ import {
 
 export default function Registration() {
   const [registrations, setRegistrations] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [idRegistrationCurrent, setIdRegistrationCurrent] = useState(0);
-
-  async function findRegistrations() {
-    try {
-      const response = await api.get('/registrations');
-      const data = response.data.map(registration => ({
-        startDateFormated: formatDate(registration.start_date),
-        endDateFormated: formatDate(registration.end_date),
-        ...registration,
-      }));
-      setRegistrations(data);
-    } catch (err) {
-      toast.error('Ocorreu um erro');
-    }
-  }
 
   useEffect(() => {
+    async function findRegistrations() {
+      try {
+        const response = await api.get('/registrations');
+        const data = response.data.map(registration => ({
+          startDateFormated: formatDate(registration.start_date),
+          endDateFormated: formatDate(registration.end_date),
+          ...registration,
+        }));
+        setRegistrations(data);
+      } catch (err) {
+        toast.error('Ocorreu um erro');
+      }
+    }
     findRegistrations();
   }, []);
 
@@ -45,46 +41,27 @@ export default function Registration() {
     history.push('/registration/update', { idRegistration });
   }
 
-  function handleButtonDelete(idRegistration) {
-    setModalIsOpen(true);
-    setIdRegistrationCurrent(idRegistration);
-  }
-
-  async function handleButtonOkModal() {
-    setModalIsOpen(false);
-    try {
-      await api.delete(`/registrations/${idRegistrationCurrent}`);
-      toast.success('Matricula apagada com sucesso');
-      await findRegistrations();
-    } catch (err) {
-      toast.error('Ocorreu um erro');
+  async function handleButtonDelete(idRegistration) {
+    const answer = window.confirm(
+      'Tem certeza que deseja apagar esta matricula ?'
+    );
+    if (answer) {
+      try {
+        await api.delete(`/registrations/${idRegistration}`);
+        toast.success('Matricula apagada com sucesso');
+        setRegistrations(
+          registrations.filter(
+            registration => registration.id !== idRegistration
+          )
+        );
+      } catch (err) {
+        toast.error('Ocorreu um erro');
+      }
     }
-  }
-
-  function handleButtonCancelModal() {
-    setModalIsOpen(false);
   }
 
   return (
     <Container>
-      <Modal
-        isOpen={modalIsOpen}
-        contentLabel="Request Delete Registration"
-        ariaHideApp={false}
-        className="Modal"
-        overlayClassName="OverlayModal"
-      >
-        <h1>Tem certeza que deseja apagar a Matrícula ?</h1>
-        <div>
-          <button type="button" onClick={handleButtonOkModal}>
-            SIM
-          </button>
-          <button type="button" onClick={handleButtonCancelModal}>
-            NÃO
-          </button>
-        </div>
-      </Modal>
-
       <Header>
         <h1>Gerenciando matrículas</h1>
         <ActionHeader>

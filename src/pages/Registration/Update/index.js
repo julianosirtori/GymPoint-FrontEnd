@@ -26,6 +26,10 @@ const styles = {
   input: () => ({
     padding: '10px 15px',
   }),
+  placeholder: value => ({
+    ...value,
+    paddingLeft: '15px',
+  }),
 };
 
 export default function UpdateRegistration() {

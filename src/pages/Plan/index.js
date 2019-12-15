@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import Modal from 'react-modal';
 
 import { formatPrice, formatMonthDuration } from '~/util/format';
 
@@ -20,25 +19,22 @@ import {
 
 export default function Plan() {
   const [plans, setPlans] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [idPlanCurrent, setIdPlanCurrent] = useState(0);
-
-  async function findPlans() {
-    try {
-      const response = await api.get('/plans');
-      const data = response.data.map(plan => ({
-        ...plan,
-        priceFormatted: formatPrice(plan.price),
-        durationFormatted: formatMonthDuration(plan.duration),
-      }));
-
-      setPlans(data);
-    } catch (err) {
-      toast.error('Ocorreu um erro');
-    }
-  }
 
   useEffect(() => {
+    async function findPlans() {
+      try {
+        const response = await api.get('/plans');
+        const data = response.data.map(plan => ({
+          ...plan,
+          priceFormatted: formatPrice(plan.price),
+          durationFormatted: formatMonthDuration(plan.duration),
+        }));
+
+        setPlans(data);
+      } catch (err) {
+        toast.error('Ocorreu um erro');
+      }
+    }
     findPlans();
   }, []);
 
@@ -46,46 +42,21 @@ export default function Plan() {
     history.push('/plan/update', { idPlan });
   }
 
-  function handleButtonDelete(idPlan) {
-    setModalIsOpen(true);
-    setIdPlanCurrent(idPlan);
-  }
-
-  async function handleButtonOkModal() {
-    setModalIsOpen(false);
-    try {
-      await api.delete(`/plans/${idPlanCurrent}`);
-      toast.success('Plano Apagado com sucesso');
-      await findPlans();
-    } catch (err) {
-      toast.error('Ocorreu um erro');
+  async function handleButtonDelete(idPlan) {
+    const answer = window.confirm('Tem certeza que deseja apagar este plano ?');
+    if (answer) {
+      try {
+        await api.delete(`/plans/${idPlan}`);
+        toast.success('Plano Apagado com sucesso');
+        setPlans(plans.filter(plan => plan.id !== idPlan));
+      } catch (err) {
+        toast.error('Ocorreu um erro');
+      }
     }
-  }
-
-  function handleButtonCancelModal() {
-    setModalIsOpen(false);
   }
 
   return (
     <Container>
-      <Modal
-        isOpen={modalIsOpen}
-        contentLabel="Request Delete Plan"
-        ariaHideApp={false}
-        className="Modal"
-        overlayClassName="OverlayModal"
-      >
-        <h1>Tem certeza que deseja apagar o Plano ?</h1>
-        <div>
-          <button type="button" onClick={handleButtonOkModal}>
-            SIM
-          </button>
-          <button type="button" onClick={handleButtonCancelModal}>
-            NÃO
-          </button>
-        </div>
-      </Modal>
-
       <Header>
         <h1>Gerenciando planos</h1>
         <ActionHeader>

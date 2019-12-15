@@ -47,7 +47,13 @@ export default function NewStudent() {
         <ContainerForm>
           <FormHorizontal>
             <ItemForm>
-              <Input label="NOME COMPLETO" type="text" name="name" required />
+              <Input
+                label="NOME COMPLETO"
+                type="text"
+                placeholder="John Doe"
+                name="name"
+                required
+              />
             </ItemForm>
           </FormHorizontal>
           <FormHorizontal>
@@ -56,6 +62,7 @@ export default function NewStudent() {
                 label="ENDEREÇO DE EMAIL"
                 type="email"
                 name="email"
+                placeholder="exemplo@email.com"
                 required
               />
             </ItemForm>

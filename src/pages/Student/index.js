@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import Modal from 'react-modal';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -19,21 +18,18 @@ import {
 
 export default function Student() {
   const [students, setStudents] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [idStudentCurrent, setIdStudentCurrent] = useState(0);
   const [search, setSearch] = useState('');
 
-  async function findStudents() {
-    try {
-      const response = await api.get('/students', { params: { search } });
-      const { data } = response;
-      setStudents(data);
-    } catch (err) {
-      toast.error('Ocorreu um erro');
-    }
-  }
-
   useEffect(() => {
+    async function findStudents() {
+      try {
+        const response = await api.get('/students', { params: { search } });
+        const { data } = response;
+        setStudents(data);
+      } catch (err) {
+        toast.error('Ocorreu um erro');
+      }
+    }
     findStudents();
     // eslint-disable-next-line
   }, [search]);
@@ -47,46 +43,21 @@ export default function Student() {
     history.push('/student/update', { idStudent });
   }
 
-  function handleButtonDelete(idStudent) {
-    setModalIsOpen(true);
-    setIdStudentCurrent(idStudent);
-  }
-
-  async function handleButtonOkModal() {
-    setModalIsOpen(false);
-    try {
-      await api.delete(`/students/${idStudentCurrent}`);
-      toast.success('Aluno Apagado com sucesso');
-      await findStudents();
-    } catch (err) {
-      toast.error('Ocorreu um erro');
+  async function handleButtonDelete(idStudent) {
+    const answer = window.confirm('Tem certeza que deseja apagar este aluno ?');
+    if (answer) {
+      try {
+        await api.delete(`/students/${idStudent}`);
+        setStudents(students.filter(student => student.id !== idStudent));
+        toast.success('Aluno Apagado com sucesso');
+      } catch (err) {
+        toast.error('Ocorreu um erro');
+      }
     }
-  }
-
-  function handleButtonCancelModal() {
-    setModalIsOpen(false);
   }
 
   return (
     <Container>
-      <Modal
-        isOpen={modalIsOpen}
-        contentLabel="Request Delete User"
-        ariaHideApp={false}
-        className="Modal"
-        overlayClassName="OverlayModal"
-      >
-        <h1>Tem certeza que deseja apagar o Aluno ?</h1>
-        <div>
-          <button type="button" onClick={handleButtonOkModal}>
-            SIM
-          </button>
-          <button type="button" onClick={handleButtonCancelModal}>
-            NÃO
-          </button>
-        </div>
-      </Modal>
-
       <Header>
         <h1>Gerenciando alunos</h1>
         <ActionHeader>

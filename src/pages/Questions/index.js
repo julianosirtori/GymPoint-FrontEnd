@@ -50,6 +50,7 @@ export default function Questions() {
         ariaHideApp={false}
         className="Modal"
         shouldCloseOnEsc
+        onRequestClose={() => setModalIsOpen(false)}
         shouldCloseOnOverlayClick
         overlayClassName="OverlayModal"
       >

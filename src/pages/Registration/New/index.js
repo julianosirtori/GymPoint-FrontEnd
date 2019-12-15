@@ -25,11 +25,16 @@ const styles = {
   input: () => ({
     padding: '10px 15px',
   }),
+  placeholder: value => ({
+    ...value,
+    paddingLeft: '15px',
+  }),
 };
 
 export default function NewRegistration() {
   const [planSelected, setPlanSelected] = useState({ duration: 0 });
   const [studentSelected, setStudentSelected] = useState({});
+  const [searchStudent, setSearchStudent] = useState('');
   const [endDate, setEndDate] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endPrice, setEndPrice] = useState('');
@@ -43,7 +48,9 @@ export default function NewRegistration() {
 
   async function loadStudents() {
     try {
-      const response = await api.get('/students');
+      const response = await api.get('/students', {
+        params: { search: searchStudent },
+      });
       return response.data.map(student => {
         return { value: student.id, label: student.name, ...student };
       });
@@ -109,6 +116,7 @@ export default function NewRegistration() {
                 }}
                 placeholder="Buscar aluno"
                 loadOptions={loadStudents}
+                onInputChange={value => setSearchStudent(value)}
                 styles={styles}
               />
             </ItemForm>
