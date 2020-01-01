@@ -80,6 +80,7 @@ export default function Student() {
         <table>
           <thead>
             <tr>
+              <th>#</th>
               <th>NOME</th>
               <th>E-EMAIL</th>
               <th className="center">IDADE</th>
@@ -89,6 +90,7 @@ export default function Student() {
           <tbody>
             {students.map(student => (
               <tr key={student.id}>
+                <td>{student.id}</td>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
                 <td className="center">{student.age}</td>
